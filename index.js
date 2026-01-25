@@ -1079,7 +1079,24 @@ async function run() {
       res.json({ message: "Favorite removed successfully" });
     });
 
+// --- AI Chatbot Route (Ollama Integration) ---
+app.post('/chat', async (req, res) => {
+  const { message } = req.body;
 
+  try {
+    // Apnar PC-te Ollama cholche kina check korbe
+    const ollamaResponse = await axios.post("http://localhost:11434/api/generate", {
+      model: "tinyllama", // Apnar PC-te jodi onno model thake (e.g. llama3), sheta likhun
+      prompt: `You are a helpful assistant for 'Love Matrimony' website. Answer the user query: ${message}`,
+      stream: false,
+    });
+
+    res.json({ reply: ollamaResponse.data.response });
+  } catch (error) {
+    console.error("Ollama Error:", error.message);
+    res.status(500).json({ error: "Ollama not responding. Make sure it is running on your PC." });
+  }
+});
 
   
     console.log('MongoDB connected successfully');
