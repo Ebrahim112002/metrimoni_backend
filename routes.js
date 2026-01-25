@@ -10,7 +10,7 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 module.exports = (col, stripe) => {
-  // --- Helper: ImgBB ---
+  
   async function uploadImageToImgBB(imageBuffer) {
     const compressedBuffer = await sharp(imageBuffer).resize({ width: 1024 }).jpeg({ quality: 80 }).toBuffer();
     const formData = new FormData();
@@ -20,7 +20,7 @@ module.exports = (col, stripe) => {
     return response.data.data.url;
   }
 
-  // --- 1. User & Admin Routes ---
+
   router.post('/users', authenticate, async (req, res) => {
     try {
       const { name, photoURL, role, isPremium = false, targetEmail } = req.body;
@@ -39,7 +39,7 @@ module.exports = (col, stripe) => {
     res.json(users);
   });
 
-  // --- 2. Biodata Routes ---
+  
   router.get('/biodatas', async (req, res) => {
     const email = req.query.email?.toLowerCase();
     const query = email ? { email } : {};
@@ -62,7 +62,6 @@ module.exports = (col, stripe) => {
     } catch (e) { res.status(500).json({ error: e.message }); }
   });
 
-  // --- 3. Payment Routes ---
   router.post('/create-payment-intent', authenticate, async (req, res) => {
     const { name, phone } = req.body;
     const customer = await stripe.customers.create({ email: req.user.email, name, phone });
@@ -73,7 +72,7 @@ module.exports = (col, stripe) => {
     res.json({ client_secret: paymentIntent.client_secret });
   });
 
-  // --- 4. Favourites ---
+  
   router.post('/favourites', authenticate, async (req, res) => {
     const { biodata_id } = req.body;
     await col.favourites.insertOne({ userEmail: req.user.email, biodata_id, addedAt: new Date() });
