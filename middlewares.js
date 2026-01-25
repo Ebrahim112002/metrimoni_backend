@@ -12,12 +12,12 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-const authorizeAdmin = (usersCollection) => async (req, res, next) => {
-  const user = await usersCollection.findOne({ email: req.user.email });
-  if (!user || user.role !== 'admin') {
-    return res.status(403).json({ error: 'Forbidden: Admin access required' });
-  }
-  next();
-};
+//const authorizeAdmin = (usersCollection) => async (req, res, next) => {
+ // const user = await usersCollection.findOne({ email: req.user.email });
+ // if (!user || user.role !== 'admin') {
+   // return res.status(403).json({ error: 'Forbidden: Admin access required' });
+ // }
+  //next();
+//};
 
 module.exports = { authenticate, authorizeAdmin };

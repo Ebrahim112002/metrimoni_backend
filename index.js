@@ -13,12 +13,12 @@ const sharp = require('sharp');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Load environment variables
+
 dotenv.config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY);
 
-// Validate environment variables
+
 const requiredEnvVars = ['FIREBASE_PROJECT_ID', 'FIREBASE_PRIVATE_KEY', 'FIREBASE_CLIENT_EMAIL', 'DB_USER', 'DB_PASS', 'IMGBB_KEY', 'STRIPE_SECRET_KEY'];
 const missingEnvVars = requiredEnvVars.filter((varName) => !process.env[varName]);
 if (missingEnvVars.length > 0) {
@@ -26,7 +26,7 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
-// Initialize Firebase Admin SDK
+
 try {
   admin.initializeApp({
     credential: admin.credential.cert({
@@ -40,7 +40,7 @@ try {
   process.exit(1);
 }
 
-// Middleware
+
 app.use(cors({ 
     origin: [
         'https://metrimoniyal.netlify.app', 
