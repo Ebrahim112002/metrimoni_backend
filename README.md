@@ -655,7 +655,7 @@ Documentation: [API Docs URL]
 
 👨‍💻 Author
 
-Md Ebrahim, Mondal Tithi
+Md Ebrahim,Aka Mondal Tithi
 
 MERN Stack Developer
 
