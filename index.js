@@ -1086,10 +1086,11 @@ app.post('/chat', async (req, res) => {
     // Axios call to Ollama
     const ollamaResponse = await axios.post("http://127.0.0.1:11434/api/generate", {
       model: "tinyllama",
-      prompt: `<|system|>You are a helpful Matrimony Assistant.<|user|>${message}<|assistant|>`,
+      prompt: `<|system|>You are a helpful Matrimony Assistant.<|user|>${message}<|assistant|>
+      `,
       stream: false,
     }, {
-      timeout: 30000 // 30 seconds wait korbe jate offline na dekhay
+      timeout: 50000 
     });
 
     res.json({ reply: ollamaResponse.data.response });
